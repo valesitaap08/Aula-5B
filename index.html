@@ -1,311 +1,591 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aula 5to</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aula 5to - BLESSED</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  background:#f5f6fa;
+  color:#202124;
+}
+header{
+  background:linear-gradient(135deg,#6c4cff,#9b7cff);
+  color:white;
+  padding:25px 20px;
+  border-radius:0 0 25px 25px;
+}
+header h1{font-size:28px}
+header p{margin-top:6px;opacity:.9}
 
-    body {
-      background: #f5f3ff;
-      color: #29263d;
-    }
+nav{
+  display:flex;
+  gap:8px;
+  padding:12px;
+  background:white;
+  overflow-x:auto;
+  position:sticky;
+  top:0;
+  z-index:5;
+  box-shadow:0 2px 8px #0001;
+}
+nav button{
+  border:0;
+  background:#f0efff;
+  color:#5540c7;
+  padding:10px 14px;
+  border-radius:12px;
+  white-space:nowrap;
+  cursor:pointer;
+}
+nav button.activo{
+  background:#6c4cff;
+  color:white;
+}
 
-    header {
-      background: #6c5ce7;
-      color: white;
-      padding: 25px 20px;
-      text-align: center;
-    }
+main{max-width:1000px;margin:auto;padding:20px}
+.seccion{display:none}
+.seccion.activa{display:block}
 
-    header h1 {
-      font-size: 30px;
-    }
+h2{margin-bottom:15px}
 
-    header p {
-      margin-top: 8px;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:15px;
+  margin-bottom:20px;
+}
 
-    main {
-      max-width: 900px;
-      margin: auto;
-      padding: 20px;
-    }
+.card{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  box-shadow:0 3px 12px #0000000d;
+}
+.card h3{margin-bottom:8px}
+.numero{font-size:30px;font-weight:bold;color:#6c4cff}
 
-    .seccion {
-      display: none;
-      background: white;
-      padding: 22px;
-      border-radius: 18px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-    }
+form{
+  background:white;
+  padding:18px;
+  border-radius:18px;
+  margin-bottom:20px;
+}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:10px;
+  font-size:15px;
+}
+textarea{min-height:90px;resize:vertical}
 
-    .seccion.activa {
-      display: block;
-    }
+.btn{
+  border:0;
+  background:#6c4cff;
+  color:white;
+  padding:11px 15px;
+  border-radius:10px;
+  cursor:pointer;
+  margin-top:5px;
+}
+.btn.rojo{background:#e74c3c}
+.btn.verde{background:#20a464}
+.btn.gris{background:#777}
 
-    .botones {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
-    }
+.item{
+  background:white;
+  padding:16px;
+  border-radius:16px;
+  margin-bottom:12px;
+  box-shadow:0 2px 8px #0000000c;
+}
+.item.completada{opacity:.65}
+.item h3{margin-bottom:7px}
+.item small{color:#666}
 
-    button {
-      border: none;
-      border-radius: 15px;
-      padding: 18px;
-      background: #f0edff;
-      color: #29263d;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#eee;
+  font-size:12px;
+  margin:5px 0;
+}
 
-    button:hover {
-      transform: translateY(-2px);
-    }
+#login{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:linear-gradient(135deg,#6c4cff,#b18cff);
+}
+.loginbox{
+  background:white;
+  width:100%;
+  max-width:380px;
+  padding:30px;
+  border-radius:25px;
+  text-align:center;
+  box-shadow:0 10px 40px #0003;
+}
+.loginbox h1{color:#6c4cff;margin-bottom:8px}
+.loginbox p{color:#666;margin-bottom:20px}
 
-    .volver {
-      background: #6c5ce7;
-      color: white;
-      margin-bottom: 15px;
-    }
+#app{display:none}
 
-    .nueva-tarea {
-      background: #6c5ce7;
-      color: white;
-      width: 100%;
-      margin: 15px 0;
-    }
-
-    .formulario {
-      display: none;
-      background: #f7f6ff;
-      padding: 18px;
-      border-radius: 15px;
-      margin-bottom: 20px;
-    }
-
-    .formulario.visible {
-      display: block;
-    }
-
-    input {
-      width: 100%;
-      padding: 13px;
-      margin: 7px 0;
-      border: 1px solid #ddd;
-      border-radius: 10px;
-      font-size: 15px;
-    }
-
-    .guardar {
-      background: #6c5ce7;
-      color: white;
-      margin-top: 8px;
-    }
-
-    .cancelar {
-      margin-top: 8px;
-      background: #ddd;
-    }
-
-    .tarjeta {
-      background: #f7f6ff;
-      padding: 15px;
-      border-radius: 12px;
-      margin-top: 12px;
-    }
-
-    .eliminar {
-      background: #eee;
-      margin-top: 10px;
-      padding: 10px 14px;
-      font-size: 14px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #777;
-    }
-
-    @media (max-width: 600px) {
-      .botones {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+@media(max-width:600px){
+  header h1{font-size:24px}
+  main{padding:14px}
+  nav button{font-size:13px}
+}
+</style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
+<div id="login">
+  <div class="loginbox">
+    <h1>🏫 Aula 5to</h1>
+    <p>Promoción BLESSED ✨</p>
+
+    <input id="codigo" type="password" placeholder="Código de acceso">
+
+    <button class="btn" onclick="entrar()">Entrar</button>
+
+    <p id="error" style="color:#e74c3c;margin-top:12px"></p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
 <header>
-  <h1>📚 Aula 5to</h1>
-  <p>Promoción BLESSED</p>
+  <h1>✨ Aula 5to</h1>
+  <p>Promoción BLESSED • 5to de Secundaria</p>
 </header>
+
+<nav>
+  <button class="activo" onclick="mostrar('inicio',this)">🏠 Inicio</button>
+  <button onclick="mostrar('tareas',this)">📝 Tareas</button>
+  <button onclick="mostrar('examenes',this)">📚 Exámenes</button>
+  <button onclick="mostrar('agenda',this)">📅 Agenda</button>
+  <button onclick="mostrar('avisos',this)">📢 Avisos</button>
+  <button onclick="mostrar('alumnos',this)">👥 Alumnos</button>
+</nav>
 
 <main>
 
-  <section id="inicio" class="seccion activa">
-    <h2>¡Bienvenidos! 👋</h2>
-    <p>Este es el espacio virtual de nuestro salón.</p>
+<!-- INICIO -->
+<section id="inicio" class="seccion activa">
+  <h2>¡Bienvenidos! 👋</h2>
 
-    <div class="botones">
-      <button onclick="mostrar('tareas')">📚 Tareas</button>
-      <button onclick="mostrar('examenes')">📝 Exámenes</button>
-      <button onclick="mostrar('agenda')">📅 Agenda</button>
-      <button onclick="mostrar('avisos')">📢 Avisos</button>
-    </div>
-  </section>
-
-  <section id="tareas" class="seccion">
-    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
-
-    <h2>📚 Tareas</h2>
-
-    <button class="nueva-tarea" onclick="abrirFormulario()">
-      ➕ Nueva tarea
-    </button>
-
-    <div id="formulario" class="formulario">
-      <h3>Agregar tarea</h3>
-
-      <input id="curso" type="text" placeholder="Curso">
-
-      <input id="nombreTarea" type="text" placeholder="Nombre de la tarea">
-
-      <input id="fecha" type="date">
-
-      <button class="guardar" onclick="agregarTarea()">
-        Guardar tarea
-      </button>
-
-      <button class="cancelar" onclick="cerrarFormulario()">
-        Cancelar
-      </button>
+  <div class="grid">
+    <div class="card">
+      <h3>👥 Alumnos</h3>
+      <div class="numero" id="numAlumnos">0</div>
     </div>
 
-    <div id="listaTareas">
-
-      <div class="tarjeta">
-        <strong>Comunicación</strong>
-        <p>Preparar la exposición.</p>
-        <small>Fecha: Próximamente</small>
-      </div>
-
-      <div class="tarjeta">
-        <strong>Matemática</strong>
-        <p>Resolver los ejercicios asignados.</p>
-        <small>Fecha: Próximamente</small>
-      </div>
-
+    <div class="card">
+      <h3>📝 Tareas pendientes</h3>
+      <div class="numero" id="numTareas">0</div>
     </div>
-  </section>
 
-  <section id="examenes" class="seccion">
-    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
-    <h2>📝 Exámenes</h2>
-
-    <div class="tarjeta">
-      <strong>Próximos exámenes</strong>
-      <p>Aquí aparecerán las fechas de los exámenes.</p>
+    <div class="card">
+      <h3>📚 Exámenes</h3>
+      <div class="numero" id="numExamenes">0</div>
     </div>
-  </section>
 
-  <section id="agenda" class="seccion">
-    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
-    <h2>📅 Agenda</h2>
-
-    <div class="tarjeta">
-      <strong>Actividades del salón</strong>
-      <p>Aquí aparecerán nuestras actividades importantes.</p>
+    <div class="card">
+      <h3>📢 Avisos</h3>
+      <div class="numero" id="numAvisos">0</div>
     </div>
-  </section>
+  </div>
 
-  <section id="avisos" class="seccion">
-    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
-    <h2>📢 Avisos</h2>
+  <div class="card">
+    <h3>📌 Resumen</h3>
+    <p id="resumen">Todavía no hay información.</p>
+  </div>
+</section>
 
-    <div class="tarjeta">
-      <strong>¡Bienvenidos a Aula 5to!</strong>
-      <p>
-        Este espacio será utilizado para compartir
-        información importante del salón.
-      </p>
-    </div>
-  </section>
+<!-- TAREAS -->
+<section id="tareas" class="seccion">
+  <h2>📝 Tareas</h2>
+
+  <form onsubmit="agregarTarea(event)">
+    <input id="tareaNombre" placeholder="Nombre de la tarea" required>
+    <input id="tareaCurso" placeholder="Curso" required>
+    <input id="tareaFecha" type="date" required>
+
+    <select id="tareaEstado">
+      <option value="Pendiente">Pendiente</option>
+      <option value="En proceso">En proceso</option>
+      <option value="Completada">Completada</option>
+    </select>
+
+    <button class="btn">➕ Agregar tarea</button>
+  </form>
+
+  <div id="listaTareas"></div>
+</section>
+
+<!-- EXAMENES -->
+<section id="examenes" class="seccion">
+  <h2>📚 Exámenes</h2>
+
+  <form onsubmit="agregarExamen(event)">
+    <input id="examenCurso" placeholder="Curso" required>
+    <input id="examenTema" placeholder="Tema del examen" required>
+    <input id="examenFecha" type="date" required>
+
+    <button class="btn">➕ Agregar examen</button>
+  </form>
+
+  <div id="listaExamenes"></div>
+</section>
+
+<!-- AGENDA -->
+<section id="agenda" class="seccion">
+  <h2>📅 Agenda</h2>
+
+  <form onsubmit="agregarAgenda(event)">
+    <input id="agendaTitulo" placeholder="Actividad" required>
+    <input id="agendaFecha" type="date" required>
+    <textarea id="agendaDescripcion" placeholder="Descripción"></textarea>
+
+    <button class="btn">➕ Agregar actividad</button>
+  </form>
+
+  <div id="listaAgenda"></div>
+</section>
+
+<!-- AVISOS -->
+<section id="avisos" class="seccion">
+  <h2>📢 Avisos</h2>
+
+  <form onsubmit="agregarAviso(event)">
+    <input id="avisoTitulo" placeholder="Título del aviso" required>
+    <textarea id="avisoTexto" placeholder="Escribe el aviso..." required></textarea>
+
+    <button class="btn">📢 Publicar aviso</button>
+  </form>
+
+  <div id="listaAvisos"></div>
+</section>
+
+<!-- ALUMNOS -->
+<section id="alumnos" class="seccion">
+  <h2>👥 Alumnos</h2>
+
+  <form onsubmit="agregarAlumno(event)">
+    <input id="alumnoNombre" placeholder="Nombre del estudiante" required>
+    <input id="alumnoCurso" placeholder="Sección o dato adicional">
+
+    <button class="btn">➕ Agregar alumno</button>
+  </form>
+
+  <div id="listaAlumnos"></div>
+</section>
 
 </main>
-
-<footer>
-  Aula 5to · Promoción BLESSED 💜
-</footer>
+</div>
 
 <script>
 
-  function mostrar(id) {
-    const secciones = document.querySelectorAll('.seccion');
+const CODIGO="BLESSED2026";
 
-    secciones.forEach(function(seccion) {
-      seccion.classList.remove('activa');
-    });
+let tareas=JSON.parse(localStorage.getItem("aula_tareas"))||[];
+let examenes=JSON.parse(localStorage.getItem("aula_examenes"))||[];
+let agenda=JSON.parse(localStorage.getItem("aula_agenda"))||[];
+let avisos=JSON.parse(localStorage.getItem("aula_avisos"))||[];
+let alumnos=JSON.parse(localStorage.getItem("aula_alumnos"))||[];
 
-    document.getElementById(id).classList.add('activa');
+function guardar(){
+  localStorage.setItem("aula_tareas",JSON.stringify(tareas));
+  localStorage.setItem("aula_examenes",JSON.stringify(examenes));
+  localStorage.setItem("aula_agenda",JSON.stringify(agenda));
+  localStorage.setItem("aula_avisos",JSON.stringify(avisos));
+  localStorage.setItem("aula_alumnos",JSON.stringify(alumnos));
+}
+
+function entrar(){
+  let codigo=document.getElementById("codigo").value;
+
+  if(codigo===CODIGO){
+    localStorage.setItem("aula_acceso","si");
+    document.getElementById("login").style.display="none";
+    document.getElementById("app").style.display="block";
+    actualizar();
+  }else{
+    document.getElementById("error").textContent="Código incorrecto ❌";
+  }
+}
+
+if(localStorage.getItem("aula_acceso")==="si"){
+  document.getElementById("login").style.display="none";
+  document.getElementById("app").style.display="block";
+}
+
+function mostrar(id,boton){
+  document.querySelectorAll(".seccion").forEach(s=>s.classList.remove("activa"));
+  document.getElementById(id).classList.add("activa");
+
+  document.querySelectorAll("nav button").forEach(b=>b.classList.remove("activo"));
+  boton.classList.add("activo");
+}
+
+function agregarTarea(e){
+  e.preventDefault();
+
+  tareas.push({
+    id:Date.now(),
+    nombre:document.getElementById("tareaNombre").value,
+    curso:document.getElementById("tareaCurso").value,
+    fecha:document.getElementById("tareaFecha").value,
+    estado:document.getElementById("tareaEstado").value
+  });
+
+  guardar();
+  e.target.reset();
+  actualizar();
+}
+
+function completarTarea(id){
+  let t=tareas.find(x=>x.id===id);
+  if(t)t.estado="Completada";
+  guardar();
+  actualizar();
+}
+
+function eliminarTarea(id){
+  tareas=tareas.filter(x=>x.id!==id);
+  guardar();
+  actualizar();
+}
+
+function mostrarTareas(){
+  let caja=document.getElementById("listaTareas");
+
+  if(!tareas.length){
+    caja.innerHTML='<div class="card">No hay tareas todavía 📭</div>';
+    return;
   }
 
-  function abrirFormulario() {
-    document.getElementById('formulario').classList.add('visible');
+  caja.innerHTML=tareas.map(t=>`
+    <div class="item ${t.estado==="Completada"?"completada":""}">
+      <h3>${t.nombre}</h3>
+      <span class="badge">${t.curso}</span>
+      <p>📅 ${t.fecha}</p>
+      <small>Estado: ${t.estado}</small><br>
+
+      ${t.estado!=="Completada"
+      ?`<button class="btn verde" onclick="completarTarea(${t.id})">✓ Completar</button>`
+      :""}
+
+      <button class="btn rojo" onclick="eliminarTarea(${t.id})">🗑 Eliminar</button>
+    </div>
+  `).join("");
+}
+
+function agregarExamen(e){
+  e.preventDefault();
+
+  examenes.push({
+    id:Date.now(),
+    curso:document.getElementById("examenCurso").value,
+    tema:document.getElementById("examenTema").value,
+    fecha:document.getElementById("examenFecha").value
+  });
+
+  guardar();
+  e.target.reset();
+  actualizar();
+}
+
+function eliminarExamen(id){
+  examenes=examenes.filter(x=>x.id!==id);
+  guardar();
+  actualizar();
+}
+
+function mostrarExamenes(){
+  let caja=document.getElementById("listaExamenes");
+
+  if(!examenes.length){
+    caja.innerHTML='<div class="card">No hay exámenes registrados 📚</div>';
+    return;
   }
 
-  function cerrarFormulario() {
-    document.getElementById('formulario').classList.remove('visible');
+  caja.innerHTML=examenes.map(x=>`
+    <div class="item">
+      <h3>📚 ${x.curso}</h3>
+      <p><b>Tema:</b> ${x.tema}</p>
+      <p>📅 ${x.fecha}</p>
+      <button class="btn rojo" onclick="eliminarExamen(${x.id})">🗑 Eliminar</button>
+    </div>
+  `).join("");
+}
+
+function agregarAgenda(e){
+  e.preventDefault();
+
+  agenda.push({
+    id:Date.now(),
+    titulo:document.getElementById("agendaTitulo").value,
+    fecha:document.getElementById("agendaFecha").value,
+    descripcion:document.getElementById("agendaDescripcion").value
+  });
+
+  guardar();
+  e.target.reset();
+  actualizar();
+}
+
+function eliminarAgenda(id){
+  agenda=agenda.filter(x=>x.id!==id);
+  guardar();
+  actualizar();
+}
+
+function mostrarAgenda(){
+  let caja=document.getElementById("listaAgenda");
+
+  if(!agenda.length){
+    caja.innerHTML='<div class="card">La agenda está vacía 📅</div>';
+    return;
   }
 
-  function agregarTarea() {
+  caja.innerHTML=agenda.map(x=>`
+    <div class="item">
+      <h3>📌 ${x.titulo}</h3>
+      <p>📅 ${x.fecha}</p>
+      <p>${x.descripcion}</p>
+      <button class="btn rojo" onclick="eliminarAgenda(${x.id})">🗑 Eliminar</button>
+    </div>
+  `).join("");
+}
 
-    const curso = document.getElementById('curso').value;
-    const nombre = document.getElementById('nombreTarea').value;
-    const fecha = document.getElementById('fecha').value;
+function agregarAviso(e){
+  e.preventDefault();
 
-    if (curso === '' || nombre === '' || fecha === '') {
-      alert('Completa todos los campos.');
-      return;
-    }
+  avisos.push({
+    id:Date.now(),
+    titulo:document.getElementById("avisoTitulo").value,
+    texto:document.getElementById("avisoTexto").value,
+    fijado:false
+  });
 
-    const tarjeta = document.createElement('div');
+  guardar();
+  e.target.reset();
+  actualizar();
+}
 
-    tarjeta.className = 'tarjeta';
+function fijarAviso(id){
+  let a=avisos.find(x=>x.id===id);
+  if(a)a.fijado=!a.fijado;
+  guardar();
+  actualizar();
+}
 
-    tarjeta.innerHTML = `
-      <strong>${curso}</strong>
-      <p>${nombre}</p>
-      <small>Fecha: ${fecha}</small>
-      <br>
-      <button class="eliminar" onclick="this.parentElement.remove()">
-        🗑️ Eliminar
+function eliminarAviso(id){
+  avisos=avisos.filter(x=>x.id!==id);
+  guardar();
+  actualizar();
+}
+
+function mostrarAvisos(){
+  let caja=document.getElementById("listaAvisos");
+
+  if(!avisos.length){
+    caja.innerHTML='<div class="card">No hay avisos 📢</div>';
+    return;
+  }
+
+  let orden=[...avisos].sort((a,b)=>b.fijado-a.fijado);
+
+  caja.innerHTML=orden.map(x=>`
+    <div class="item">
+      <h3>${x.fijado?"📌 ":""}${x.titulo}</h3>
+      <p>${x.texto}</p>
+
+      <button class="btn" onclick="fijarAviso(${x.id})">
+        ${x.fijado?"Desfijar":"📌 Fijar"}
       </button>
-    `;
 
-    document.getElementById('listaTareas').appendChild(tarjeta);
+      <button class="btn rojo" onclick="eliminarAviso(${x.id})">
+        🗑 Eliminar
+      </button>
+    </div>
+  `).join("");
+}
 
-    document.getElementById('curso').value = '';
-    document.getElementById('nombreTarea').value = '';
-    document.getElementById('fecha').value = '';
+function agregarAlumno(e){
+  e.preventDefault();
 
-    cerrarFormulario();
+  alumnos.push({
+    id:Date.now(),
+    nombre:document.getElementById("alumnoNombre").value,
+    curso:document.getElementById("alumnoCurso").value
+  });
+
+  guardar();
+  e.target.reset();
+  actualizar();
+}
+
+function eliminarAlumno(id){
+  alumnos=alumnos.filter(x=>x.id!==id);
+  guardar();
+  actualizar();
+}
+
+function mostrarAlumnos(){
+  let caja=document.getElementById("listaAlumnos");
+
+  if(!alumnos.length){
+    caja.innerHTML='<div class="card">Todavía no hay alumnos registrados 👥</div>';
+    return;
   }
+
+  caja.innerHTML=alumnos.map(x=>`
+    <div class="item">
+      <h3>👤 ${x.nombre}</h3>
+      <p>${x.curso||"Estudiante de 5to"}</p>
+      <button class="btn rojo" onclick="eliminarAlumno(${x.id})">🗑 Eliminar</button>
+    </div>
+  `).join("");
+}
+
+function actualizar(){
+  guardar();
+
+  mostrarTareas();
+  mostrarExamenes();
+  mostrarAgenda();
+  mostrarAvisos();
+  mostrarAlumnos();
+
+  document.getElementById("numAlumnos").textContent=alumnos.length;
+
+  document.getElementById("numTareas").textContent=
+    tareas.filter(x=>x.estado!=="Completada").length;
+
+  document.getElementById("numExamenes").textContent=examenes.length;
+  document.getElementById("numAvisos").textContent=avisos.length;
+
+  document.getElementById("resumen").textContent=
+    `Hay ${tareas.filter(x=>x.estado!=="Completada").length} tareas pendientes, ${examenes.length} exámenes registrados y ${avisos.length} avisos.`;
+}
+
+actualizar();
 
 </script>
 
 </body>
-</html>
+  </html>
