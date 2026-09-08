@@ -15,7 +15,7 @@
 
     body {
       background: #f5f3ff;
-      color: #27233a;
+      color: #29263d;
     }
 
     header {
@@ -36,46 +36,63 @@
     main {
       max-width: 900px;
       margin: auto;
-      padding: 25px 18px;
+      padding: 20px;
     }
 
-    .bienvenida {
+    .seccion {
+      display: none;
       background: white;
-      padding: 25px;
+      padding: 22px;
       border-radius: 18px;
       margin-bottom: 20px;
       box-shadow: 0 4px 15px rgba(0,0,0,0.08);
     }
 
-    .bienvenida h2 {
-      margin-bottom: 10px;
+    .seccion.activa {
+      display: block;
     }
 
-    .menu {
+    .inicio {
+      display: block;
+    }
+
+    .botones {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 15px;
+      margin-top: 20px;
     }
 
-    .boton {
-      background: white;
+    button {
       border: none;
-      border-radius: 18px;
-      padding: 25px 15px;
-      cursor: pointer;
-      font-size: 17px;
+      border-radius: 15px;
+      padding: 18px;
+      background: #f0edff;
+      color: #29263d;
+      font-size: 16px;
       font-weight: bold;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
     }
 
-    .boton:hover {
+    button:hover {
       transform: translateY(-2px);
     }
 
-    .icono {
-      display: block;
-      font-size: 32px;
-      margin-bottom: 8px;
+    .volver {
+      background: #6c5ce7;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    .tarjeta {
+      background: #f7f6ff;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 12px;
     }
 
     footer {
@@ -85,7 +102,7 @@
     }
 
     @media (max-width: 600px) {
-      .menu {
+      .botones {
         grid-template-columns: 1fr;
       }
     }
@@ -94,51 +111,89 @@
 
 <body>
 
-  <header>
-    <h1>📚 Aula 5to</h1>
-    <p>Promoción BLESSED</p>
-  </header>
+<header>
+  <h1>📚 Aula 5to</h1>
+  <p>Promoción BLESSED</p>
+</header>
 
-  <main>
+<main>
 
-    <section class="bienvenida">
-      <h2>¡Bienvenidos! 👋</h2>
-      <p>
-        Este es el espacio virtual de nuestro salón.
-        Aquí podremos organizar nuestras tareas, exámenes,
-        actividades y avisos importantes.
-      </p>
-    </section>
+  <section id="inicio" class="seccion activa">
+    <h2>¡Bienvenidos! 👋</h2>
+    <p>Este es el espacio virtual de nuestro salón.</p>
 
-    <section class="menu">
+    <div class="botones">
+      <button onclick="mostrar('tareas')">📚 Tareas</button>
+      <button onclick="mostrar('examenes')">📝 Exámenes</button>
+      <button onclick="mostrar('agenda')">📅 Agenda</button>
+      <button onclick="mostrar('avisos')">📢 Avisos</button>
+    </div>
+  </section>
 
-      <button class="boton" onclick="alert('Aquí estarán las tareas 📚')">
-        <span class="icono">📚</span>
-        Tareas
-      </button>
+  <section id="tareas" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📚 Tareas</h2>
 
-      <button class="boton" onclick="alert('Aquí estarán los exámenes 📝')">
-        <span class="icono">📝</span>
-        Exámenes
-      </button>
+    <div class="tarjeta">
+      <strong>Comunicación</strong>
+      <p>Preparar la exposición.</p>
+      <small>Fecha: Próximamente</small>
+    </div>
 
-      <button class="boton" onclick="alert('Aquí estará la agenda 📅')">
-        <span class="icono">📅</span>
-        Agenda
-      </button>
+    <div class="tarjeta">
+      <strong>Matemática</strong>
+      <p>Resolver los ejercicios asignados.</p>
+      <small>Fecha: Próximamente</small>
+    </div>
+  </section>
 
-      <button class="boton" onclick="alert('Aquí estarán los avisos 📢')">
-        <span class="icono">📢</span>
-        Avisos
-      </button>
+  <section id="examenes" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📝 Exámenes</h2>
 
-    </section>
+    <div class="tarjeta">
+      <strong>Próximos exámenes</strong>
+      <p>Aquí aparecerán las fechas de los exámenes.</p>
+    </div>
+  </section>
 
-  </main>
+  <section id="agenda" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📅 Agenda</h2>
 
-  <footer>
-    Aula 5to · Promoción BLESSED 💜
-  </footer>
+    <div class="tarjeta">
+      <strong>Actividades del salón</strong>
+      <p>Aquí aparecerán nuestras actividades importantes.</p>
+    </div>
+  </section>
+
+  <section id="avisos" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📢 Avisos</h2>
+
+    <div class="tarjeta">
+      <strong>¡Bienvenidos a Aula 5to!</strong>
+      <p>Este espacio será utilizado para compartir información importante del salón.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Aula 5to · Promoción BLESSED 💜
+</footer>
+
+<script>
+  function mostrar(id) {
+    const secciones = document.querySelectorAll('.seccion');
+
+    secciones.forEach(function(seccion) {
+      seccion.classList.remove('activa');
+    });
+
+    document.getElementById(id).classList.add('activa');
+  }
+</script>
 
 </body>
 </html>
