@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aula 5to</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f5f3ff;
+      color: #27233a;
+    }
+
+    header {
+      background: #6c5ce7;
+      color: white;
+      padding: 25px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 30px;
+    }
+
+    header p {
+      margin-top: 8px;
+    }
+
+    main {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 18px;
+    }
+
+    .bienvenida {
+      background: white;
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .bienvenida h2 {
+      margin-bottom: 10px;
+    }
+
+    .menu {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .boton {
+      background: white;
+      border: none;
+      border-radius: 18px;
+      padding: 25px 15px;
+      cursor: pointer;
+      font-size: 17px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .boton:hover {
+      transform: translateY(-2px);
+    }
+
+    .icono {
+      display: block;
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      .menu {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>📚 Aula 5to</h1>
+    <p>Promoción BLESSED</p>
+  </header>
+
+  <main>
+
+    <section class="bienvenida">
+      <h2>¡Bienvenidos! 👋</h2>
+      <p>
+        Este es el espacio virtual de nuestro salón.
+        Aquí podremos organizar nuestras tareas, exámenes,
+        actividades y avisos importantes.
+      </p>
+    </section>
+
+    <section class="menu">
+
+      <button class="boton" onclick="alert('Aquí estarán las tareas 📚')">
+        <span class="icono">📚</span>
+        Tareas
+      </button>
+
+      <button class="boton" onclick="alert('Aquí estarán los exámenes 📝')">
+        <span class="icono">📝</span>
+        Exámenes
+      </button>
+
+      <button class="boton" onclick="alert('Aquí estará la agenda 📅')">
+        <span class="icono">📅</span>
+        Agenda
+      </button>
+
+      <button class="boton" onclick="alert('Aquí estarán los avisos 📢')">
+        <span class="icono">📢</span>
+        Avisos
+      </button>
+
+    </section>
+
+  </main>
+
+  <footer>
+    Aula 5to · Promoción BLESSED 💜
+  </footer>
+
+</body>
+</html>
