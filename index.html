@@ -535,18 +535,29 @@ function mostrarAvisos(){
   `).join("");
 }
 
-function agregarAlumno(e){
+async function agregarAlumno(e){
   e.preventDefault();
 
-  alumnos.push({
-    id:Date.now(),
-    nombre:document.getElementById("alumnoNombre").value,
-    curso:document.getElementById("alumnoCurso").value
-  });
+  const nombre = document.getElementById("alumnoNombre").value;
+  const curso = document.getElementById("alumnoCurso").value;
 
-  guardar();
+  const { data, error } = await supabase
+    .from("alumnos")
+    .insert([
+      {
+        nombre: nombre,
+        curso: curso
+      }
+    ])
+    .select();
+
+  if(error){
+    alert("No se pudo guardar el alumno: " + error.message);
+    return;
+  }
+
   e.target.reset();
-  actualizar();
+  cargarAlumnos();
 }
 
 function eliminarAlumno(id){
@@ -555,23 +566,37 @@ function eliminarAlumno(id){
   actualizar();
 }
 
-function mostrarAlumnos(){
-  let caja=document.getElementById("listaAlumnos");
+async function cargarAlumnos(){
+  const { data, error } = await supabase
+    .from("alumnos")
+    .select("*")
+    .order("id", { ascending: false });
 
-  if(!alumnos.length){
-    caja.innerHTML='<div class="card">Todavía no hay alumnos registrados 👥</div>';
+  if(error){
+    console.error(error);
     return;
   }
 
-  caja.innerHTML=alumnos.map(x=>`
+  alumnos = data || [];
+  mostrarAlumnos();
+  document.getElementById("numAlumnos").textContent = alumnos.length;
+}
+
+function mostrarAlumnos(){
+  let caja = document.getElementById("listaAlumnos");
+
+  if(!alumnos.length){
+    caja.innerHTML = '<div class="card">Todavía no hay alumnos registrados 👥</div>';
+    return;
+  }
+
+  caja.innerHTML = alumnos.map(x => `
     <div class="item">
       <h3>👤 ${x.nombre}</h3>
-      <p>${x.curso||"Estudiante de 5to"}</p>
-      <button class="btn rojo" onclick="eliminarAlumno(${x.id})">🗑 Eliminar</button>
+      <p>${x.curso || "Estudiante de 5to"}</p>
     </div>
   `).join("");
 }
-
 function actualizar(){
   guardar();
 
