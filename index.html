@@ -52,6 +52,280 @@
       display: block;
     }
 
+    .botones {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 15px;
+      padding: 18px;
+      background: #f0edff;
+      color: #29263d;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    .volver {
+      background: #6c5ce7;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .nueva-tarea {
+      background: #6c5ce7;
+      color: white;
+      width: 100%;
+      margin: 15px 0;
+    }
+
+    .formulario {
+      display: none;
+      background: #f7f6ff;
+      padding: 18px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+    }
+
+    .formulario.visible {
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 13px;
+      margin: 7px 0;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    .guardar {
+      background: #6c5ce7;
+      color: white;
+      margin-top: 8px;
+    }
+
+    .cancelar {
+      margin-top: 8px;
+      background: #ddd;
+    }
+
+    .tarjeta {
+      background: #f7f6ff;
+      padding: 15px;
+      border-radius: 12px;
+      margin-top: 12px;
+    }
+
+    .eliminar {
+      background: #eee;
+      margin-top: 10px;
+      padding: 10px 14px;
+      font-size: 14px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      .botones {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>📚 Aula 5to</h1>
+  <p>Promoción BLESSED</p>
+</header>
+
+<main>
+
+  <section id="inicio" class="seccion activa">
+    <h2>¡Bienvenidos! 👋</h2>
+    <p>Este es el espacio virtual de nuestro salón.</p>
+
+    <div class="botones">
+      <button onclick="mostrar('tareas')">📚 Tareas</button>
+      <button onclick="mostrar('examenes')">📝 Exámenes</button>
+      <button onclick="mostrar('agenda')">📅 Agenda</button>
+      <button onclick="mostrar('avisos')">📢 Avisos</button>
+    </div>
+  </section>
+
+  <section id="tareas" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+
+    <h2>📚 Tareas</h2>
+
+    <button class="nueva-tarea" onclick="abrirFormulario()">
+      ➕ Nueva tarea
+    </button>
+
+    <div id="formulario" class="formulario">
+      <h3>Agregar tarea</h3>
+
+      <input id="curso" type="text" placeholder="Curso">
+
+      <input id="nombreTarea" type="text" placeholder="Nombre de la tarea">
+
+      <input id="fecha" type="date">
+
+      <button class="guardar" onclick="agregarTarea()">
+        Guardar tarea
+      </button>
+
+      <button class="cancelar" onclick="cerrarFormulario()">
+        Cancelar
+      </button>
+    </div>
+
+    <div id="listaTareas">
+
+      <div class="tarjeta">
+        <strong>Comunicación</strong>
+        <p>Preparar la exposición.</p>
+        <small>Fecha: Próximamente</small>
+      </div>
+
+      <div class="tarjeta">
+        <strong>Matemática</strong>
+        <p>Resolver los ejercicios asignados.</p>
+        <small>Fecha: Próximamente</small>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="examenes" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📝 Exámenes</h2>
+
+    <div class="tarjeta">
+      <strong>Próximos exámenes</strong>
+      <p>Aquí aparecerán las fechas de los exámenes.</p>
+    </div>
+  </section>
+
+  <section id="agenda" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📅 Agenda</h2>
+
+    <div class="tarjeta">
+      <strong>Actividades del salón</strong>
+      <p>Aquí aparecerán nuestras actividades importantes.</p>
+    </div>
+  </section>
+
+  <section id="avisos" class="seccion">
+    <button class="volver" onclick="mostrar('inicio')">← Volver</button>
+    <h2>📢 Avisos</h2>
+
+    <div class="tarjeta">
+      <strong>¡Bienvenidos a Aula 5to!</strong>
+      <p>
+        Este espacio será utilizado para compartir
+        información importante del salón.
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Aula 5to · Promoción BLESSED 💜
+</footer>
+
+<script>
+
+  function mostrar(id) {
+    const secciones = document.querySelectorAll('.seccion');
+
+    secciones.forEach(function(seccion) {
+      seccion.classList.remove('activa');
+    });
+
+    document.getElementById(id).classList.add('activa');
+  }
+
+  function abrirFormulario() {
+    document.getElementById('formulario').classList.add('visible');
+  }
+
+  function cerrarFormulario() {
+    document.getElementById('formulario').classList.remove('visible');
+  }
+
+  function agregarTarea() {
+
+    const curso = document.getElementById('curso').value;
+    const nombre = document.getElementById('nombreTarea').value;
+    const fecha = document.getElementById('fecha').value;
+
+    if (curso === '' || nombre === '' || fecha === '') {
+      alert('Completa todos los campos.');
+      return;
+    }
+
+    const tarjeta = document.createElement('div');
+
+    tarjeta.className = 'tarjeta';
+
+    tarjeta.innerHTML = `
+      <strong>${curso}</strong>
+      <p>${nombre}</p>
+      <small>Fecha: ${fecha}</small>
+      <br>
+      <button class="eliminar" onclick="this.parentElement.remove()">
+        🗑️ Eliminar
+      </button>
+    `;
+
+    document.getElementById('listaTareas').appendChild(tarjeta);
+
+    document.getElementById('curso').value = '';
+    document.getElementById('nombreTarea').value = '';
+    document.getElementById('fecha').value = '';
+
+    cerrarFormulario();
+  }
+
+</script>
+
+</body>
+</html>      max-width: 900px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    .seccion {
+      display: none;
+      background: white;
+      padding: 22px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .seccion.activa {
+      display: block;
+    }
+
     .inicio {
       display: block;
     }
